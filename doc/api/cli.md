@@ -1026,7 +1026,10 @@ module. String input is input via `--eval`, `--print`, or `STDIN`.
 
 Valid values are `"commonjs"` and `"module"`. The default is `"commonjs"`.
 
-The REPL does not support this option.
+If specifying a type, make sure that following:
+  - The REPL does not support this option.
+  - Default input type can be altered with `--experimental-default-type=module`
+  - `--print` does not support `--input-type=module`
 
 ### `--insecure-http-parser`
 
