@@ -338,7 +338,7 @@ changes:
   * `autoClose` {boolean} **Default:** `true`
   * `emitClose` {boolean} **Default:** `true`
   * `start` {integer}
-  * `highWaterMark` {number} **Default:** `16384`
+  * `highWaterMark` {integer} **Default:** `64 * 1024`
   * `flush` {boolean} If `true`, the underlying file descriptor is flushed
     prior to closing it. **Default:** `false`.
 * Returns: {fs.WriteStream}
@@ -2666,7 +2666,7 @@ changes:
   * `start` {integer}
   * `fs` {Object|null} **Default:** `null`
   * `signal` {AbortSignal|null} **Default:** `null`
-  * `highWaterMark` {number} **Default:** `16384`
+  * `highWaterMark` {integer} **Default:** `64 * 1024`
   * `flush` {boolean} If `true`, the underlying file descriptor is flushed
     prior to closing it. **Default:** `false`.
 * Returns: {fs.WriteStream}
