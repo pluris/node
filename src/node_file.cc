@@ -1409,7 +1409,7 @@ static void FTruncate(const FunctionCallbackInfo<Value>& args) {
   }
 
   CHECK(IsSafeJsInt(args[1]));
-  const int64_t len = args[1].As<Integer>()->Value();
+  const int64_t len = std::max(0, args[1].As<Integer>()->Value());
 
   if (argc > 2) {  // ftruncate(fd, len, req)
     FSReqBase* req_wrap_async = GetReqWrap(args, 2);
