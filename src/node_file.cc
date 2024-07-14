@@ -1303,15 +1303,15 @@ static void Link(const FunctionCallbackInfo<Value>& args) {
   CHECK_GE(argc, 2);
 
   BufferValue src(isolate, args[0]);
-  CHECK_NOT_NULL(*src);
-  ToNamespacedPath(env, &src);
-
-  const auto src_view = src.ToStringView();
-
   BufferValue dest(isolate, args[1]);
+
+  CHECK_NOT_NULL(*src);
   CHECK_NOT_NULL(*dest);
+
+  ToNamespacedPath(env, &src);
   ToNamespacedPath(env, &dest);
 
+  const auto src_view = src.ToStringView();
   const auto dest_view = dest.ToStringView();
 
   if (argc > 2) {  // link(src, dest, req)
@@ -1411,13 +1411,14 @@ static void Rename(const FunctionCallbackInfo<Value>& args) {
   CHECK_GE(argc, 2);
 
   BufferValue old_path(isolate, args[0]);
-  CHECK_NOT_NULL(*old_path);
-  ToNamespacedPath(env, &old_path);
-  auto view_old_path = old_path.ToStringView();
-
   BufferValue new_path(isolate, args[1]);
+  CHECK_NOT_NULL(*old_path);
   CHECK_NOT_NULL(*new_path);
+
+  ToNamespacedPath(env, &old_path);
   ToNamespacedPath(env, &new_path);
+  auto view_old_path = old_path.ToStringView();
+  auto view_new_path = new_path.ToStringView();
 
   if (argc > 2) {  // rename(old_path, new_path, req)
     FSReqBase* req_wrap_async = GetReqWrap(args, 2);
@@ -2113,12 +2114,14 @@ static void CopyFile(const FunctionCallbackInfo<Value>& args) {
   }
 
   BufferValue src(isolate, args[0]);
-  CHECK_NOT_NULL(*src);
-  ToNamespacedPath(env, &src);
-
   BufferValue dest(isolate, args[1]);
+  CHECK_NOT_NULL(*src);
   CHECK_NOT_NULL(*dest);
+  ToNamespacedPath(env, &src);
   ToNamespacedPath(env, &dest);
+
+  auto src_view = src.ToStringView();
+  auto dest_view = dest.ToStringView();
 
   if (argc > 3) {  // copyFile(src, dest, flags, req)
     FSReqBase* req_wrap_async = GetReqWrap(args, 3);
