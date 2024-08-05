@@ -1395,7 +1395,7 @@ static void ReadLink(const FunctionCallbackInfo<Value>& args) {
     int err =
         SyncCallAndThrowOnError(env, &req_wrap_sync, uv_fs_readlink, *path);
     FS_SYNC_TRACE_END(readlink);
-    if (err < 0) {
+    if (is_uv_error(err)) {
       return;
     }
     const char* link_path = static_cast<const char*>(req_wrap_sync.req.ptr);
@@ -1953,7 +1953,7 @@ static void RealPath(const FunctionCallbackInfo<Value>& args) {
     int err =
         SyncCallAndThrowOnError(env, &req_wrap_sync, uv_fs_realpath, *path);
     FS_SYNC_TRACE_END(realpath);
-    if (err < 0) {
+    if (is_uv_error(err)) {
       return;
     }
 
@@ -2537,7 +2537,7 @@ static void WriteFileUtf8(const FunctionCallbackInfo<Value>& args) {
         env, &req_write, uv_fs_write, file, &uvbuf, 1, -1);
 
     // Write errored out
-    if (bytesWritten < 0) {
+    if (is_uv_error(bytesWritten)) {
       break;
     }
 
